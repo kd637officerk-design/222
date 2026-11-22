@@ -1,4 +1,5 @@
-name: Build Desktop App
+
+name: Build XI Media Deck Desktop
 
 on:
   workflow_dispatch:
@@ -6,8 +7,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
-  build:
+  build-windows:
     runs-on: windows-latest
 
     steps:
@@ -17,19 +21,22 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
-      - name: Build Windows app
+      - name: Build web application
         run: npm run build
 
-      - name: Package desktop app
-        run: npx electron-builder --win
+      - name: Build Windows desktop application
+        run: npx electron-builder --win --publish never
 
-      - name: Upload installer
+      - name: Upload Windows installers
         uses: actions/upload-artifact@v4
         with:
           name: XI-Media-Deck-Windows
-          path: dist/**/*.exe
+          path: |
+            release/*.exe
+          if-no-files-found: error
+          retention-days: 14
