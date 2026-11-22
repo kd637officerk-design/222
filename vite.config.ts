@@ -9,6 +9,7 @@ const rootDir = import.meta.dirname;
 
 export default defineConfig(() => {
   return {
+    base: './',
     plugins: [
       react(),
       tailwindcss(),

@@ -1,0 +1,32 @@
+appId: com.xi.mediadeck
+productName: XI Media Deck
+artifactName: '${productName}-${version}-${os}-${arch}.${ext}'
+directories:
+  output: release
+  buildResources: assets
+files:
+  - dist/**/*
+  - electron/**/*
+  - assets/icon.png
+  - package.json
+extraMetadata:
+  main: electron/main.cjs
+win:
+  icon: assets/icon.ico
+  target:
+    - nsis
+    - portable
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+mac:
+  icon: assets/icon.png
+  target: dmg
+linux:
+  icon: assets/icon.png
+  target:
+    - AppImage
+    - deb
+  category: AudioVideo
